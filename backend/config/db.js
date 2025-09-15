@@ -1,13 +1,22 @@
+// config/db.js
 const mongoose = require('mongoose');
 
-const connectDB = async () => {
+async function connectDB() {
   try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log('MongoDB Connected...');
+    // avoid deprecation warnings
+    mongoose.set('strictQuery', false);
+
+    const conn = await mongoose.connect(process.env.MONGO_URI, {
+      // options default ok in modern mongoose, but you can keep them
+      // useNewUrlParser: true,
+      // useUnifiedTopology: true,
+    });
+
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (err) {
-    console.error(err.message);
+    console.error('MongoDB connection error:', err.message);
     process.exit(1);
   }
-};
+}
 
 module.exports = connectDB;
