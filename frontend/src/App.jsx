@@ -1,39 +1,21 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import LoginPage from "./pages/Login";
-import Home from "./pages/Home";
-import { useSelector } from "react-redux";
-import ProfilePage from "./pages/Profile";
+// src/App.jsx (or wherever your routes are defined)
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Profile from "./pages/Profile";
+import UserProfile from "./pages/userprofile";
+import AllPosts from "./pages/AllPosts";
+// ... other imports
 
-
-function PrivateRoute({ children }) {
-  const token = useSelector((state) => state.auth.token) || localStorage.getItem("idToken");
-  return token ? children : <Navigate to="/login" replace />;
-}
-
-export default function App() {
+function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route
-          path="/"
-          element={
-            <PrivateRoute>
-              <Home />
-            </PrivateRoute>
-          }
-        />
-          <Route
-  path="/profile"
-  element={
-    <PrivateRoute>
-      <ProfilePage />
-    </PrivateRoute>
-  }
-/>
-
+        <Route path="/profile" element={<Profile />} /> {/* logged-in user */}
+        <Route path="/profile/:id" element={<UserProfile />} /> {/* any user */}
+        <Route path="/posts" element={<AllPosts />} />
+        {/* other routes */}
       </Routes>
     </Router>
   );
 }
+
+export default App;
