@@ -17,8 +17,8 @@ export default function UserProfile() {
         const userRes = await api.get(`/users/${id}`); // get user info
         setUser(userRes.data);
 
-        const postsRes = await api.get(`/posts/users/${id}`); // get user's posts
-        setPosts(postsRes.data.data || []);
+        const postsRes = await api.get(`users/${id}/posts`); // get user's posts
+        setPosts(postsRes.data || []);
       } catch (err) {
         console.error(err);
       } finally {
