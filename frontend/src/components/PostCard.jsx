@@ -1,13 +1,21 @@
 // src/components/PostCard.jsx
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux"; // <-- import this
 import { useNavigate } from "react-router-dom";
+import EditPostForm from "./EditPostForm";
 
 export default function PostCard({ post }) {
   const navigate = useNavigate();
+  const [editing, setEditing] = useState(false);
+
+  // <-- get logged-in user
+  const currentUser = useSelector((state) => state.user.me); 
+
+  // check if logged-in user is the owner
+  const isOwner = currentUser?._id === post.author?._id;
 
   if (!post) return null;
 
-  // Use author instead of user
   const authorName = post.author?.name || "Unknown User";
   const authorId = post.author?._id;
 
@@ -26,17 +34,34 @@ export default function PostCard({ post }) {
         backgroundColor: "#fff",
       }}
     >
-      <h3 style={{ marginBottom: "0.5rem" }}>{post.title}</h3>
-      <p style={{ marginBottom: "0.5rem" }}>{post.content}</p>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <span
-          style={{ color: "blue", cursor: authorId ? "pointer" : "default" }}
-          onClick={goToUserProfile}
-        >
-          {authorName}
-        </span>
-        {post.tags && <span>{post.tags.join(", ")}</span>}
-      </div>
+      {editing ? (
+        <EditPostForm post={post} onClose={() => setEditing(false)} />
+      ) : (
+        <>
+          <h3 style={{ marginBottom: "0.5rem" }}>{post.title}</h3>
+          <p style={{ marginBottom: "0.5rem" }}>{post.content}</p>
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span
+              style={{ color: "blue", cursor: authorId ? "pointer" : "default" }}
+              onClick={goToUserProfile}
+            >
+              {authorName}
+            </span>
+            {post.tags && <span>{post.tags.join(", ")}</span>}
+          </div>
+
+          {isOwner && (
+            <div style={{ marginTop: "0.5rem", display: "flex", gap: "0.5rem" }}>
+              <button
+                onClick={() => setEditing(true)}
+                style={{ background: "orange", color: "white", padding: "0.3rem 0.7rem", borderRadius: "4px" }}
+              >
+                Edit
+              </button>
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 }

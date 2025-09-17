@@ -1,25 +1,73 @@
-// src/App.jsx (or wherever your routes are defined)
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Profile from "./pages/Profile";
-import UserProfile from "./pages/userprofile";
-import AllPosts from "./pages/AllPosts";
-import Home from "./pages/Home";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Login from "./pages/Login";
-// ... other imports
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import UserProfile from "./pages/UserProfile";
+import AllPosts from "./pages/AllPosts";
+import Navbar from "./components/Navbar";
+import Posts from "./components/posts"; 
+import CreatePost from "./pages/CreatePost";
 
-function App() {
+function PrivateRoute({ children }) {
+  const token = useSelector((state) => state.auth.token) || localStorage.getItem("idToken");
+  return token ? children : <Navigate to="/login" replace />;
+}
+
+export default function App() {
   return (
     <Router>
+      <Navbar /> {/* always visible for logged-in users */}
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile />} /> {/* logged-in user */}
-        <Route path="/profile/:id" element={<UserProfile />} /> {/* any user */}
-        <Route path="/posts" element={<AllPosts />} />
-        {/* other routes */}
+
+        {/* Private routes */}
+        <Route
+          path="/posts"
+          element={
+            <PrivateRoute>
+              <AllPosts />
+            </PrivateRoute>
+          }
+        />
+        <Route
+  path="/posts"
+  element={
+    <PrivateRoute>
+      <Posts />
+    </PrivateRoute>
+  }
+/>
+<Route
+  path="/create"
+  element={
+    <PrivateRoute>
+      <CreatePost />
+    </PrivateRoute>
+  }
+/>
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/profile/:id"
+          element={
+            <PrivateRoute>
+              <UserProfile />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/"
+          element={<Navigate to="/posts" replace />} // redirect home to posts
+        />
       </Routes>
     </Router>
   );
 }
-
-export default App;
