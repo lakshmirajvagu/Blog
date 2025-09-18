@@ -1,11 +1,11 @@
-#📝 Blog Platform
+📝 Blog Platform
 
 A full-stack Blog Publishing Platform that allows users to sign up, log in, create, read, update, and delete blog posts.
 The project focuses on web interface and backend API integration, with Firebase authentication for secure user access.
 
-#🚀 Features
+🚀 Features
 
-#✅ Core
+✅ Core
 
 Authentication
 
@@ -28,7 +28,7 @@ Basic profile page with user info
 List of user’s own blog posts
 
 
-#🏗️ Tech Stack
+🏗️ Tech Stack
 
 Frontend (Web): React, Redux Toolkit, SCSS
 
@@ -38,7 +38,7 @@ Database: MongoDB (via Mongoose)
 
 Authentication: Firebase Authentication (Email/Password + Google OAuth)
 
-#⚙️ Setup Instructions
+⚙️ Setup Instructions
 1. Clone Repository
 git clone https://github.com/lakshmirajvagu/Blog.git
 cd blog-platform
@@ -87,7 +87,7 @@ POST	/posts	Create a post
 PUT	/posts/:id	Update own post
 DELETE	/posts/:id	Delete own post
 
-#🎯 AI Usage
+🎯 AI Usage
 AI tools were leveraged mainly for boosting productivity:
 
 Code Snippets & Boilerplate
@@ -110,7 +110,7 @@ Debugging: “Fix my Express JWT middleware error without changing logic.”
 
 Styling: “Write SCSS for a modal popup with smooth transitions.”
 
-#⚡ Challenges Faced
+⚡ Challenges Faced
 
 Firebase Auth Integration – Handling sign-in with Google & Email properly in React.
 
@@ -119,7 +119,7 @@ State Management – Keeping authentication state synced with Redux Toolkit.
 Backend Coordination – Aligning Firebase-authenticated users with backend routes and database records.
 
 
-#✅ Deliverables Checklist
+✅ Deliverables Checklist
 
  Backend (Node.js + Express + MongoDB)
 
@@ -131,5 +131,5 @@ Backend Coordination – Aligning Firebase-authenticated users with backend rout
 
  README with AI usage + setup instructions
 
-#👩‍💻 Author
+👩‍💻 Author
 Sai Lakshmi Raj vagu
