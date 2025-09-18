@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPosts } from "../store/postSlice";
 import { Link } from "react-router-dom";
 import PostCard from "./PostCard";
+import Navbar from "./Navbar";
 
 export default function Posts() {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ export default function Posts() {
 
   return (
     <div className="p-4 space-y-4">
+      <Navbar />
       <input
         type="text"
         placeholder="Search user..."

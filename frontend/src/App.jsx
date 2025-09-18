@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Login from "./pages/Login";
@@ -17,7 +18,7 @@ function PrivateRoute({ children }) {
 export default function App() {
   return (
     <Router>
-      <Navbar /> {/* always visible for logged-in users */}
+      {/* <Navbar /> always visible for logged-in users */}
       <Routes>
         <Route path="/login" element={<Login />} />
 

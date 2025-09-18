@@ -1,7 +1,7 @@
-// src/components/ProfileEditForm.jsx
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateMe } from "../store/userSlice";
+import "../styles/ProfileEditForm.scss"; // Import styles
 
 export default function ProfileEditForm({ onClose }) {
   const dispatch = useDispatch();
@@ -9,7 +9,7 @@ export default function ProfileEditForm({ onClose }) {
 
   const [name, setName] = useState(me?.name || "");
   const [bio, setBio] = useState(me?.bio || "");
-  const [photoFile, setPhotoFile] = useState(null); // store actual File
+  const [photoFile, setPhotoFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -21,9 +21,8 @@ export default function ProfileEditForm({ onClose }) {
       formData.append("name", name);
       formData.append("bio", bio);
 
-      // Only append file if user selected one
       if (photoFile) {
-        formData.append("photo", photoFile); // MUST match backend upload.single('photo')
+        formData.append("photo", photoFile);
       }
 
       await dispatch(updateMe(formData)).unwrap();
@@ -38,17 +37,24 @@ export default function ProfileEditForm({ onClose }) {
 
   return (
     <form onSubmit={handleSubmit} className="profile-edit-form">
-      <div>
+      <div className="form-group">
         <label>Name:</label>
-        <input value={name} onChange={(e) => setName(e.target.value)} required />
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
       </div>
 
-      <div>
+      <div className="form-group">
         <label>Bio:</label>
-        <textarea value={bio} onChange={(e) => setBio(e.target.value)} />
+        <textarea
+          value={bio}
+          onChange={(e) => setBio(e.target.value)}
+        />
       </div>
 
-      <div>
+      <div className="form-group">
         <label>Profile Photo:</label>
         <input
           type="file"
@@ -57,12 +63,14 @@ export default function ProfileEditForm({ onClose }) {
         />
       </div>
 
-      <button type="submit" disabled={loading}>
-        {loading ? "Updating..." : "Update Profile"}
-      </button>
-      <button type="button" onClick={onClose}>
-        Cancel
-      </button>
+      <div className="form-actions">
+        <button type="submit" className="btn-primary" disabled={loading}>
+          {loading ? "Updating..." : "Update Profile"}
+        </button>
+        <button type="button" className="btn-secondary" onClick={onClose}>
+          Cancel
+        </button>
+      </div>
     </form>
   );
 }

@@ -16,7 +16,7 @@ export default function PostCard({ post }) {
 
   if (!post) return null;
 
-  const authorName = post.author?.name || "Unknown User";
+  const authorName = post.author?.name;
   const authorId = post.author?._id;
 
   const goToUserProfile = () => {

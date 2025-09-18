@@ -1,8 +1,9 @@
-// controllers/userController.js
 const upsertUserFromFirebase = require('../utils/upsertUser');
 const User = require('../models/User');
 const Post = require('../models/Post');
+const mongoose = require('mongoose'); // ✅ Added this
 
+// Protected: current user
 async function getMe(req, res, next) {
   try {
     const decoded = req.user;
@@ -34,12 +35,12 @@ async function updateMe(req, res, next) {
 async function getUserProfile(req, res, next) {
   try {
     const identifier = req.params.identifier;
-    // allow either uid or Mongo _id
-    let user = null;
-    user = await User.findOne({ uid: identifier }).select('-__v');
+
+    let user = await User.findOne({ uid: identifier }).select('-__v');
     if (!user && mongoose.isValidObjectId(identifier)) {
       user = await User.findById(identifier).select('-__v');
     }
+
     if (!user) return res.status(404).json({ error: 'User not found' });
     res.json(user);
   } catch (err) {
@@ -47,16 +48,22 @@ async function getUserProfile(req, res, next) {
   }
 }
 
+// Public: get a user's posts
 async function getUserPosts(req, res, next) {
   try {
     const identifier = req.params.identifier;
+
     let user = await User.findOne({ uid: identifier });
     if (!user && mongoose.isValidObjectId(identifier)) {
       user = await User.findById(identifier);
     }
+
     if (!user) return res.status(404).json({ error: 'User not found' });
 
-    const posts = await Post.find({ author: user._id }).sort({ createdAt: -1 }).populate('author','name photoURL');
+    const posts = await Post.find({ author: user._id })
+      .sort({ createdAt: -1 })
+      .populate('author', 'name photoURL');
+
     res.json(posts);
   } catch (err) {
     next(err);

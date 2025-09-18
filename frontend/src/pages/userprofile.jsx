@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../services/api";
 import PostCard from "../components/PostCard";
+import Navbar from "../components/Navbar";
 
 export default function UserProfile() {
   const { id } = useParams(); // user ID from URL
@@ -33,8 +34,9 @@ export default function UserProfile() {
   if (!user) return <p>User not found</p>;
 
   return (
-    <div style={{ maxWidth: "800px", margin: "2rem auto" }}>
-      <div style={{ textAlign: "center", marginBottom: "2rem" }}>
+    <div style={{ margin: "2rem auto" }}>
+      <Navbar />
+      <div style={{ marginBottom: "1px" }}>
         <img
           src={user.photoURL || "/default-avatar.png"}
           alt={user.name}

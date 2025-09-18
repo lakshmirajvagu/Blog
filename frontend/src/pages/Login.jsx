@@ -1,3 +1,4 @@
+// src/pages/LoginPage.jsx
 import React, { useState } from "react";
 import AuthForm from "../components/AuthForm";
 import { auth, googleProvider } from "../services/firebase";
@@ -5,6 +6,7 @@ import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { setToken, setUser } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
+import "../styles/LoginPage.scss";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
@@ -19,7 +21,14 @@ export default function LoginPage() {
       const idToken = await user.getIdToken();
 
       dispatch(setToken(idToken));
-      dispatch(setUser({ uid: user.uid, email: user.email, name: user.displayName, photoURL: user.photoURL }));
+      dispatch(
+        setUser({
+          uid: user.uid,
+          email: user.email,
+          name: user.displayName,
+          photoURL: user.photoURL,
+        })
+      );
       localStorage.setItem("idToken", idToken);
 
       navigate("/");
@@ -39,7 +48,14 @@ export default function LoginPage() {
       const idToken = await user.getIdToken();
 
       dispatch(setToken(idToken));
-      dispatch(setUser({ uid: user.uid, email: user.email, name: user.displayName, photoURL: user.photoURL }));
+      dispatch(
+        setUser({
+          uid: user.uid,
+          email: user.email,
+          name: user.displayName,
+          photoURL: user.photoURL,
+        })
+      );
       localStorage.setItem("idToken", idToken);
 
       navigate("/");
@@ -52,9 +68,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
+    <div className="login-page">
       <h1>Login Page</h1>
-      <AuthForm onSubmit={handleSubmit} onGoogle={handleGoogle} loading={loading} />
+      <div className="auth-form">
+        <AuthForm onSubmit={handleSubmit} onGoogle={handleGoogle} loading={loading} />
+      </div>
     </div>
   );
 }

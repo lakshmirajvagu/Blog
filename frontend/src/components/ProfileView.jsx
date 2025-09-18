@@ -10,7 +10,7 @@ export default function ProfileView() {
   if (!me) return <p>Loading...</p>;
 
   return (
-    <div className="profile-view">
+    <div className="profile-view" style={{ marginBottom: "2rem" }}>
       <img src={me.photoURL} alt="Profile" width={150} />
       <h2>{me.name}</h2>
       <p>{me.email}</p>

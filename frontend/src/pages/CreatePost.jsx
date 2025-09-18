@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../store/postSlice";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import "../styles/CreatePost.scss"; // Optional: for custom styles
 
 export default function CreatePost() {
   const [title, setTitle] = useState("");
@@ -29,7 +31,8 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="max-w-lg mx-auto mt-8 p-6 bg-white shadow rounded">
+    <div className="create-post">
+      <Navbar />
       <h2 className="text-2xl font-bold mb-4">Create a New Post</h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">

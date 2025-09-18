@@ -5,6 +5,7 @@ import { fetchMe } from "../store/userSlice";
 import { fetchMyPosts, deletePost } from "../store/postSlice";
 import ProfileView from "../components/ProfileView";
 import PostCard from "../components/PostCard";
+import Navbar from "../components/Navbar";
 
 export default function ProfilePage() {
   const dispatch = useDispatch();
@@ -31,7 +32,8 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="page profile-page" style={{ maxWidth: "800px", margin: "2rem auto" }}>
+    <div className="page profile-page">
+      <Navbar />
       <ProfileView />
 
       <h3>My Posts</h3>
